@@ -3,9 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delizia - Restaurant Gourmet</title>
+    <meta name="description" content="Delizia - Restaurant Gourmet en Guayaquil. Cocina italiana artesanal, reservas, eventos especiales. Experiencia culinaria única.">
+    <meta name="keywords" content="restaurant, gourmet, Guayaquil, comida italiana, reservaciones, eventos">
+    <meta name="author" content="Delizia Restaurant">
+    <meta property="og:title" content="Delizia - Restaurant Gourmet">
+    <meta property="og:description" content="Experiencia culinaria única en Guayaquil">
+    <meta property="og:type" content="restaurant.restaurant">
+    <title>Delizia - Restaurant Gourmet | Guayaquil</title>
+    <!-- Schema.org Restaurant -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Delizia",
+        "description": "Restaurant gourmet de cocina italiana artesanal",
+        "url": "https://delizia-restaurant.vercel.app",
+        "telephone": "+593999999999",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Guayaquil",
+            "addressCountry": "EC"
+        },
+        "openingHours": "Mo-Su 12:00-23:00",
+        "servesCuisine": "Italian",
+        "priceRange": "$$$",
+        "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "500"
+        }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lazy loading
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.onload = () => img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            lazyImages.forEach(img => imageObserver.observe(img));
+
+            // Scroll animations
+            const animateOnScroll = document.querySelectorAll('.animate-on-scroll');
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            animateOnScroll.forEach(el => scrollObserver.observe(el));
+
+            // Header scroll
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // Mobile menu
+            document.getElementById('mobileToggle').addEventListener('click', () => {
+                document.getElementById('nav').classList.toggle('active');
+            });
+
+            // Reservation form
+            document.getElementById('reserveForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const success = document.getElementById('formSuccess');
+                success.classList.add('show');
+                this.reset();
+                setTimeout(() => success.classList.remove('show'), 5000);
+            });
+        });
+    </script>
     <style>
         :root{--p:#d4a373;--pd:#bc8a5f;--s:#2d3436;--sl:#636e72;--a:#e17055;--w:#fefae0;--bg:#fffcf2;--dark:#1a1a1a;--gold:#c9a227;--cream:#f5f0e1}
         *{margin:0;padding:0;box-sizing:border-box}
@@ -22,10 +101,13 @@
         .bp:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(225,112,85,.5)}
         .bs{background:0 0;color:var(--a);border:2px solid var(--a)}
         .bs:hover{background:var(--a);color:#fff}
-        .hd{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,252,240,.95);backdrop-filter:blur(15px);box-shadow:0 4px 30px rgba(0,0,0,.05)}
+        .hd{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,252,240,.95);backdrop-filter:blur(15px);box-shadow:0 4px 30px rgba(0,0,0,.05);transition:all .3s}
+        .hd.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.1)}
         .hc{display:flex;justify-content:space-between;align-items:center;padding:25px 0}
         .lg{font-family:'DM Serif Display',serif;font-size:36px;color:var(--s);text-decoration:none;letter-spacing:2px}
         .lg span{color:var(--a)}
+        .mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px}
+        .mobile-toggle span{width:25px;height:3px;background:var(--s);transition:.3s}
         .nv{display:flex;align-items:center;gap:45px}
         .nl{color:var(--s);font-weight:500;font-size:14px;text-decoration:none;position:relative;transition:.3s;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:1.5px}
         .nl::after{content:'';position:absolute;bottom:-8px;left:0;width:0;height:1px;background:var(--a);transition:.3s}
@@ -44,7 +126,7 @@
         .hb1{padding:20px 50px;font-size:15px;border-radius:0;text-decoration:none;font-weight:600;transition:.5s;display:inline-flex;align-items:center;gap:12px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:2px}
         .hb1p{background:var(--p);color:var(--s)}
         .hb1p:hover{background:#fff;transform:translateY(-5px)}
-        .hb1s{background:0 0;color:#fff;border:1px solid rgba(255,255,255,.5)}
+        .hb1s{background:0;color:#fff;border:1px solid rgba(255,255,255,.5)}
         .hb1s:hover{background:#fff;color:var(--s)}
         .hs{display:flex;gap:60px;justify-content:center;margin-top:50px;animation:fadeInUp 1s ease .8s both}
         .hsn{text-align:center}
@@ -70,7 +152,7 @@
         .mnu::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920') center/cover;opacity:.05}
         .mnu .st,.mnu .ss{color:#fff}
         .mnu .ss{opacity:.7}
-        .mg{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:60px}
+        .mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:60px}
         .mc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:40px 30px;border-radius:0;transition:.4s;text-align:center}
         .mc:hover{background:rgba(255,255,255,.1);transform:translateY(-10px)}
         .mci{width:120px;height:120px;border-radius:50%;margin:0 auto 25px;object-fit:cover;border:3px solid var(--p)}
@@ -98,48 +180,57 @@
         .cta2 h2{font-size:58px;color:#fff;margin-bottom:20px}
         .cta2 p{color:rgba(255,255,255,.9);font-size:22px;margin-bottom:35px}
         .testi{background:var(--bg);position:relative;overflow:hidden}
-        .tg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:40px;margin-top:60px}
-        .tcd{background:#fff;padding:50px;border-radius:0;box-shadow:0 20px 60px rgba(0,0,0,.06);border-left:4px solid var(--p)}
-        .tcs{color:var(--gold);font-size:22px;margin-bottom:20px}
-        .tct{color:var(--dark);font-size:20px;line-height:1.8;font-style:italic;margin-bottom:30px}
-        .ta{display:flex;align-items:center;gap:18px}
-        .ta img{width:65px;height:65px;border-radius:50%;object-fit:cover;border:2px solid var(--p)}
-        .tan{font-size:20px;color:var(--s);font-weight:600}
+        .tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:40px;margin-top:60px}
+        .tcd{background:#fff;padding:45px;border-radius:0;box-shadow:0 20px 60px rgba(0,0,0,.08);text-align:center}
+        .tcs{color:var(--a);font-size:20px;margin-bottom:20px}
+        .tct{font-size:20px;color:var(--dark);line-height:1.8;font-style:italic;margin-bottom:25px}
+        .ta{display:flex;align-items:center;justify-content:center;gap:15px}
+        .ta img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--p)}
+        .tan{font-weight:700;color:var(--s);font-size:18px}
         .tar{color:var(--sl);font-size:14px}
         .ft{background:var(--s);color:#fff;padding:80px 0 30px}
-        .fg4{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:50px;margin-bottom:50px}
-        .fb2{font-family:'DM Serif Display',serif;font-size:32px;margin-bottom:18px}
-        .fa p{color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:22px;font-size:17px}
+        .fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:50px}
+        .fb2{display:flex;align-items:center;gap:15px;margin-bottom:25px}
+        .fbi{width:55px;height:55px;background:var(--p);border-radius:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+        .fbt{font-family:'DM Serif Display',serif;font-size:32px}
+        .fa p{color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:25px}
         .fsoc{display:flex;gap:15px}
-        .fsoc a{width:48px;height:48px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:.3s}
-        .fsoc a:hover{background:var(--a);transform:translateY(-4px)}
-        .ftt{font-size:20px;margin-bottom:25px;color:#fff;font-weight:600}
+        .fsoc a{width:45px;height:45px;background:rgba(255,255,255,.1);border-radius:0;display:flex;align-items:center;justify-content:center;color:#fff;transition:.3s}
+        .fsoc a:hover{background:var(--a);transform:translateY(-5px)}
+        .ftt{font-size:18px;margin-bottom:25px;color:#fff;font-weight:700}
         .flk{list-style:none}
-        .flk li{margin-bottom:14px}
-        .flk a{color:rgba(255,255,255,.6);text-decoration:none;transition:.3s;font-size:16px}
-        .flk a:hover{color:var(--p);padding-left:5px}
-        .fbottom{border-top:1px solid rgba(255,255,255,.1);padding-top:25px;text-align:center;color:rgba(255,255,255,.5);font-size:14px}
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
-        @media(max-width:1200px){.mg{grid-template-columns:repeat(2,1fr)}.rf{grid-template-columns:1fr}.ri{max-width:600px;margin:0 auto}}
-        @media(max-width:992px){.st{font-size:40px}.hr h1{font-size:48px}.ag{grid-template-columns:1fr;gap:60px}.ai{max-width:500px;margin:0 auto}.mg{grid-template-columns:1fr}.fg4{grid-template-columns:repeat(2,1fr)}.nv{display:none}}
-        @media(max-width:768px){.st{font-size:32px}.hr h1{font-size:36px}.hs{flex-direction:column;gap:25px}.ab h2{font-size:36px}.af2{grid-template-columns:1fr}.tg2{grid-template-columns:1fr}.fg4{grid-template-columns:1fr}.rt{grid-template-columns:1fr}.hbt{flex-direction:column}}
+        .flk li{margin-bottom:15px}
+        .flk a{color:rgba(255,255,255,.65);text-decoration:none;transition:.3s}
+        .flk a:hover{color:var(--p)}
+        .fbottom{border-top:1px solid rgba(255,255,255,.1);padding-top:30px;text-align:center;color:rgba(255,255,255,.5);font-size:14px}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+        .animate-on-scroll{opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.4,0,.2,1)}
+        .animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+        img[data-src]{opacity:0;transition:opacity 0.5s}
+        img.loaded{opacity:1}
+        .form-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:20px;margin-bottom:20px;display:none;border-radius:0}
+        .form-success.show{display:block;animation:fadeInUp .5s ease}
+        @media(max-width:1200px){.ag{gap:60px}.rf{gap:50px}.fg{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:992px){.st{font-size:42px}.hr h1{font-size:56px}.ab h2{font-size:42px}.ag,.rf{grid-template-columns:1fr}.ai,.ri{order:-1;max-width:500px;margin:0 auto}.nv{display:none}.mobile-toggle{display:flex}.nv.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--bg);padding:25px;box-shadow:0 15px 50px rgba(0,0,0,.1)}}
+        @media(max-width:768px){.st{font-size:32px}.hr h1{font-size:40px}.hs{gap:30px;flex-direction:column}.hsn-n{font-size:40px}.mnu{padding:80px 0}.cta2 h2{font-size:40px}.fg{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
-<header class="hd">
+<header class="hd" id="header">
     <div class="c">
         <div class="hc">
-            <a href="#" class="lg">Delizia<span>.</span></a>
-            <nav class="nv">
+            <a href="#" class="lg" aria-label="Delizia">Delizia<span>.</span></a>
+            <div class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></div>
+            <nav class="nv" id="nav">
                 <a href="#inicio" class="nl">Inicio</a>
                 <a href="#nosotros" class="nl">Nosotros</a>
-                <a href="#menu" class="nl">Menu</a>
+                <a href="#menu" class="nl">Menú</a>
                 <a href="#reservas" class="nl">Reservas</a>
                 <a href="#testimonios" class="nl">Testimonios</a>
             </nav>
             <div class="ca">
                 <a href="tel:+593999999999" class="ph"><i class="fas fa-phone-alt"></i> +593 99 999 9999</a>
-                <a href="#reservas" class="btn bp">Reservar Mesa</a>
+                <a href="#reservas" class="btn bp">Reservar</a>
             </div>
         </div>
     </div>
@@ -147,17 +238,17 @@
 <section class="hr" id="inicio">
     <div class="c">
         <div class="hc2">
-            <div class="hb"><i class="fas fa-wine-glass"></i> Experiencia Gastronomica Exclusiva</div>
-            <h1>Donde Cada Bocado <i>Es</i> Una Historia</h1>
-            <p>Descubre el arte de la cocina gourmet en un ambiente elegante y acogedor</p>
+            <div class="hb"><i class="fas fa-wine-glass"></i> Cocina Gourmet</div>
+            <h1>Delizia <i>Ristorante</i></h1>
+            <p>Donde la tradición italiana se encuentra con la innovación culinaria</p>
             <div class="hbt">
-                <a href="#reservas" class="hb1 hb1p"><i class="fas fa-calendar-alt"></i> Reservar Ahora</a>
-                <a href="#menu" class="hb1 hb1s"><i class="fas fa-utensils"></i> Ver Menu</a>
+                <a href="#reservas" class="hb1 hb1p"><i class="fas fa-calendar-alt"></i> Reservar Mesa</a>
+                <a href="#menu" class="hb1 hb1s"><i class="fas fa-utensils"></i> Ver Menú</a>
             </div>
             <div class="hs">
-                <div class="hsn"><div class="hsn-n">12</div><div class="hsn-l">Anos de Excelencia</div></div>
-                <div class="hsn"><div class="hsn-n">50K+</div><div class="hsn-l">Clientes Felices</div></div>
-                <div class="hsn"><div class="hsn-n">150+</div><div class="hsn-l">Platos Unicos</div></div>
+                <div class="hsn"><div class="hsn-n">15+</div><div class="hsn-l">Años</div></div>
+                <div class="hsn"><div class="hsn-n">50K+</div><div class="hsn-l">Clientes</div></div>
+                <div class="hsn"><div class="hsn-n">4.9</div><div class="hsn-l">Estrellas</div></div>
             </div>
         </div>
     </div>
@@ -165,84 +256,88 @@
 <section class="sec ab" id="nosotros">
     <div class="c">
         <div class="ag">
-            <div class="ai">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600" alt="Restaurant" class="am">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=220" alt="Interior" class="af">
-                <div class="ae"><div class="ae-n">12</div><div class="ae-t">Anos de Tradicion</div></div>
+            <div class="ai animate-on-scroll">
+                <img data-src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600" alt="Chef preparando" class="am">
+                <img data-src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200" alt="Plato gourmet" class="af">
+                <div class="ae"><div class="ae-n">15</div><div class="ae-t">Años de Excelencia</div></div>
             </div>
-            <div>
-                <h2>Una Passion por <span>la Excelencia</span></h2>
-                <p>Desde 2014, Delizia ha sido el destino gastronomico preferido de los amantes de la buena comida. Nuestro chef combina ingredientes locales frescos con tecnicas internacionales para crear experiencias culinarias unforgettable.</p>
-                <div class="af2"><div><i class="fas fa-check"></i> Ingredientes organicos</div><div><i class="fas fa-check"></i> Chef internacional</div><div><i class="fas fa-check"></i> Ambiente unico</div><div><i class="fas fa-check"></i> Carta de vinos premium</div></div>
-                <a href="#menu" class="btn bp">Explorar Menu</a>
+            <div class="animate-on-scroll">
+                <h2>Delizia: Pasión por <span>la gastronomía</span></h2>
+                <p>En Delizia, cada plato cuenta una historia. Nuestra filosofía se basa en ingredientes frescos, técnicas tradicionales y un toque de innovación que sorprende.</p>
+                <div class="af2"><div><i class="fas fa-leaf"></i> Ingredientes orgánicos</div><div><i class="fas fa-wine-glass"></i> Vinos premium</div><div><i class="fas fa-award"></i> Chef reconocido</div><div><i class="fas fa-heart"></i> Recetas familiares</div></div>
+                <a href="#menu" class="btn bp">Explorar Menú</a>
             </div>
         </div>
     </div>
 </section>
 <section class="sec mnu" id="menu">
     <div class="c">
-        <div class="tc"><h2 class="st">Nuestro Menu</h2><p class="ss">Platos creados con pasion y los mejores ingredientes</p></div>
+        <div class="tc"><h2 class="st animate-on-scroll">Nuestro Menú</h2><p class="ss animate-on-scroll">Platos diseñados para cautivar</p></div>
         <div class="mg">
-            <div class="mc"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=150" alt="Pasta" class="mci"><h3>Tagliatelle al Tartufo</h3><p>Tagliatelle fresco con trufa negra y queso parmesan aged</p><div class="pr">$32</div></div>
-            <div class="mc"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=150" alt="Steak" class="mci"><h3>Filetto di Manzo</h3><p>Filete de res wagyu con reduccion de vino tinto y verduras</p><div class="pr">$45</div></div>
-            <div class="mc"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150" alt="Pizza" class="mci"><h3>Margherita Speciale</h3><p>Masa artesanal, mozzarella di bufala, tomates cherry y albahaca</p><div class="pr">$24</div></div>
-            <div class="mc"><img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=150" alt="Dessert" class="mci"><h3>Tiramisu Classico</h3><p>Postre tradicional italiano con cafe expresso y mascarpone</p><div class="pr">$14</div></div>
-            <div class="mc"><img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=150" alt="Wine" class="mci"><h3>Carta de Vinos</h3><p>Seleccion premium de vinos tintos, blancos y espumantes</p><div class="pr">Desde $8</div></div>
-            <div class="mc"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=150" alt="Seafood" class="mci"><h3>Risotto ai Frutti di Mare</h3><p>Risotto cremoso con mariscos frescos yailoli de ajo</p><div class="pr">$38</div></div>
+            <div class="mc animate-on-scroll"><img data-src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=200" alt="Pasta" class="mci"><h3>Pasta Artesanal</h3><p>Preparada diariamente con ingredientes frescos</p><div class="pr">Desde $18</div></div>
+            <div class="mc animate-on-scroll" style="animation-delay:0.1s"><img data-src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=200" alt="Carne" class="mci"><h3>Carnes Premium</h3><p>Corte selecto de las mejores reses</p><div class="pr">Desde $32</div></div>
+            <div class="mc animate-on-scroll" style="animation-delay:0.2s"><img data-src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200" alt="Pizza" class="mci"><h3>Pizza Napolitana</h3><p>Horno de leña authentic italiano</p><div class="pr">Desde $22</div></div>
+            <div class="mc animate-on-scroll" style="animation-delay:0.3s"><img data-src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200" alt="Postre" class="mci"><h3>Postres Caseros</h3><p>Recetas tradicionales italianas</p><div class="pr">Desde $12</div></div>
         </div>
     </div>
 </section>
 <section class="sec rsv" id="reservas">
     <div class="c">
         <div class="rf">
-            <div class="ri">
-                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" alt="Reservacion">
-            </div>
-            <div class="rc">
-                <h2>Reserva tu <span>Experiencia</span></h2>
-                <p>Garantiza tu mesa y disfruta de una noche gastronomica inolvidable</p>
+            <div class="ri animate-on-scroll"><img data-src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" alt="Restaurant ambiance"></div>
+            <div class="rc animate-on-scroll">
+                <h2>Reserva tu <span>experiencia</span></h2>
+                <p>Vive una noche inolvidable en Delizia. Reserve su mesa y déjenos surprises con nuestra gastronomía.</p>
                 <div class="rt">
-                    <div class="rt-item"><div class="rt-icon"><i class="fas fa-clock"></i></div><div class="rt-text"><h4>Horario</h4><p>Lun-Dom: 12pm - 11pm</p></div></div>
+                    <div class="rt-item"><div class="rt-icon"><i class="fas fa-clock"></i></div><div class="rt-text"><h4>Horario</h4><p>Lun-Dom: 12pm-11pm</p></div></div>
                     <div class="rt-item"><div class="rt-icon"><i class="fas fa-users"></i></div><div class="rt-text"><h4>Capacidad</h4><p>Hasta 80 comensales</p></div></div>
-                    <div class="rt-item"><div class="rt-icon"><i class="fas fa-map-marker-alt"></i></div><div class="rt-text"><h4>Ubicacion</h4><p>Av. Gourmet 456, Guayaquil</p></div></div>
-                    <div class="rt-item"><div class="rt-icon"><i class="fas fa-phone"></i></div><div class="rt-text"><h4>Telefono</h4><p>+593 99 999 9999</p></div></div>
                 </div>
-                <a href="#" class="btn bp"><i class="fas fa-calendar-check"></i> Reservar Ahora</a>
+                <div class="form-success" id="formSuccess">¡Reserva enviada! Te contactaremos pronto para confirmar.</div>
+                <form id="reserveForm">
+                    <div class="fr" style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px">
+                        <input type="text" placeholder="Nombre" required style="padding:15px;border:1px solid var(--sl);background:#fff;font-family:inherit">
+                        <input type="tel" placeholder="Teléfono" required style="padding:15px;border:1px solid var(--sl);background:#fff;font-family:inherit">
+                    </div>
+                    <div class="fr" style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px">
+                        <input type="date" required style="padding:15px;border:1px solid var(--sl);background:#fff;font-family:inherit">
+                        <input type="time" required style="padding:15px;border:1px solid var(--sl);background:#fff;font-family:inherit">
+                    </div>
+                    <input type="number" placeholder="Número de personas" min="1" max="20" required style="padding:15px;border:1px solid var(--sl);background:#fff;font-family:inherit;width:100%;margin-bottom:15px">
+                    <button type="submit" class="btn bp" style="width:100%">Confirmar Reserva</button>
+                </form>
             </div>
         </div>
     </div>
 </section>
-<section class="cta2">
+<section class="sec cta2">
     <div class="c">
         <div class="cct2">
-            <h2>Vive la Experiencia Delizia</h2>
-            <p>Reserva tu mesa hoy y descubre un mundo de sabores</p>
-            <a href="#" class="btn" style="background:#fff;color:var(--a)"><i class="fas fa-phone-alt"></i> Llamar Ahora</a>
+            <h2 class="animate-on-scroll">¿Celebrando algo especial?</h2>
+            <p class="animate-on-scroll">Eventos privados, cenas románticas, reuniones de empresa. Haz de tu momento algo único.</p>
+            <a href="#reservas" class="btn" style="background:#fff;color:var(--a)">Solicitar Información</a>
         </div>
     </div>
 </section>
 <section class="sec testi" id="testimonios">
     <div class="c">
-        <div class="tc"><h2 class="st">Que Dicen Nuestros Comensales</h2><p class="ss">Experiencias que nos inspiran a mejorar cada dia</p></div>
-        <div class="tg2">
-            <div class="tcd"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"La mejor experiencia gastronomica de mi vida. El tagliatelle con trufa es increible. Volvere sin duda."</p><div class="ta"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Carlos M."><div><div class="tan">Carlos Mendoza</div><div class="tar">Critico Gastronomico</div></div></div></div>
-            <div class="tcd"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"Ambiente perfecto para una cena romantica. El servicio es impecable y la carta de vinos es fenomenal."</p><div class="ta"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Maria E."><div><div class="tan">Maria Fernandez</div><div class="tar">Cliente Frecuente</div></div></div></div>
-            <div class="tcd"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"Celebramos nuestro aniversario aqui y fue perfecto. El chef nos preparo un menu especial. Increible."</p><div class="ta"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Jorge L."><div><div class="tan">Jorge Lopez</div><div class="tar">Empresario</div></div></div></div>
+        <div class="tc"><h2 class="st animate-on-scroll">Qué Dicen Nuestros Clientes</h2><p class="ss animate-on-scroll">La satisfacción de nuestros comensales</p></div>
+        <div class="tg">
+            <div class="tcd animate-on-scroll"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"La mejor experiencia culinaria en Guayaquil. La pasta es autenticamente italiana."</p><div class="ta"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Cliente"><div><div class="tan">Carlos M.</div><div class="tar">Cliente frecuente</div></div></div></div>
+            <div class="tcd animate-on-scroll" style="animation-delay:0.1s"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"Celebramos nuestro aniversario y fue perfecto. La атмосфера es increíble."</p><div class="ta"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Cliente"><div><div class="tan">Ana Lucía R.</div><div class="tar">Viajera</div></div></div></div>
+            <div class="tcd animate-on-scroll" style="animation-delay:0.2s"><div class="tcs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="tct">"El mejor restaurant italiano que he visitado. Recomendado 100%."</p><div class="ta"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Cliente"><div><div class="tan">Roberto D.</div><div class="tar">Empresario</div></div></div></div>
         </div>
     </div>
 </section>
 <footer class="ft">
     <div class="c">
-        <div class="fg4">
-            <div class="fa">
-                <div class="fb2">Delizia<span style="color:var(--a)">.</span></div>
-                <p>Donde la gastronomia se convierte en arte. Te esperamos para crear momentos inolvidables juntos.</p>
-                <div class="fsoc"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-tripadvisor"></i></a></div>
-            </div>
-            <div><h4 class="ftt">Horario</h4><ul class="flk"><li>Lunes - Jueves: 12pm - 10pm</li><li>Viernes - Sabado: 12pm - 11pm</li><li>Domingo: 11am - 9pm</li></ul></div>
-            <div><h4 class="ftt">Enlaces</h4><ul class="flk"><li><a href="#inicio">Inicio</a></li><li><a href="#menu">Menu</a></li><li><a href="#reservas">Reservas</a></li><li><a href="#contacto">Contacto</a></li></ul></div>
-            <div><h4 class="ftt">Contacto</h4><ul class="flk"><li><i class="fas fa-map-marker-alt"></i> Av. Gourmet 456</li><li><i class="fas fa-phone"></i> +593 99 999 9999</li><li><i class="fas fa-envelope"></i> info@delizia.com</li></ul></div>
+        <div class="fg">
+            <div><div class="fb2"><div class="fbi"><i class="fas fa-utensils"></i></div><div class="fbt">Delizia.</div></div><p>Donde cada comida es una celebración. Más de 15 años deleitando paladares exigentes.</p><div class="fsoc"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div>
+            <div><h4 class="ftt">Enlaces</h4><ul class="flk"><li><a href="#inicio">Inicio</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#menu">Menú</a></li><li><a href="#reservas">Reservas</a></li></ul></div>
+            <div><h4 class="ftt">Horario</h4><ul class="flk"><li>Lunes - Jueves: 12pm - 10pm</li><li>Viernes - Sábado: 12pm - 11pm</li><li>Domingo: 11am - 10pm</li></ul></div>
+            <div><h4 class="ftt">Contacto</h4><ul class="flk"><li><i class="fas fa-map-marker-alt"></i> Av. Principal, Guayaquil</li><li><i class="fas fa-phone-alt"></i> +593 99 999 9999</li><li><i class="fas fa-envelope"></i> hola@delizia.com</li></ul></div>
         </div>
         <div class="fbottom">&copy; 2026 Delizia Restaurant. Todos los derechos reservados.</div>
     </div>
-</footer></body></html>
+</footer>
+</body>
+</html>
